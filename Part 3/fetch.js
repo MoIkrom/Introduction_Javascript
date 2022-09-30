@@ -3,7 +3,8 @@ fetch("https://jsonplaceholder.typicode.com/users")
     return response.json();
   })
   .then((response) => {
-    const names = response.map((el) => console.log(el.name));
-    console.log(names);
+    response.forEach((el) => {
+      console.log(el.name);
+    });
   })
   .catch((error) => console.log(error));

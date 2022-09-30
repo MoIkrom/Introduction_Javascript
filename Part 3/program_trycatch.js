@@ -8,7 +8,7 @@
 //         return item === makanan;
 //       });
 //       if (cek) {
-//         resolve("Menu " + cek + " Masih Tersedia");
+//         resolve(cek);
 //       } else {
 //         rejects(new Error("Menu tidak tersedia"));
 //       }
@@ -19,41 +19,36 @@
 // // Then & Catch
 // menuMakanan("Ayam Gulai")
 //   .then((response) => {
-//     console.log(response);
+//     console.log("Menu " + response + " Masih Tersedia");
 //   })
 //   .catch((error) => {
 //     console.log(error.message);
 //   });
 
-// // program ke 2
+//.
+
+// // // program ke 2
 const seleksiNilai = (nilaiAwal, nilaiAkhir, dataArray) => {
-  return new Promise((resolve, rejects) => {
-    setTimeout((cek) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
       //validasi
-      if (typeof (nilaiAwal && nilaiAkhir) !== "number") return "Input harus berupa number";
-      if (nilaiAwal > nilaiAkhir) return "Nilai Akhir harus lebih besar dari Nilai Awal";
-      if (dataArray.length < 5) return "Jumlah angka dalam data array harus lebih dari 5";
+      if (typeof (nilaiAwal && nilaiAkhir) !== "number") return reject(new Error("Input harus berupa number"));
+      if (nilaiAwal > nilaiAkhir) return reject(new Error("Nilai Akhir harus lebih besar dari Nilai Awal"));
+      if (dataArray.length < 5) return reject(new Error("Jumlah angka dalam data array harus lebih dari 5"));
 
       //   proses
       let newArray = dataArray.sort((a, b) => a - b).filter((e) => e >= nilaiAwal && e <= nilaiAkhir);
 
-      if (newArray.length <= 0) return "Nilai Tidak Ditemukan !";
-      consol.log(newArray);
-
-      if (cek) {
-        resolve(cek);
-      } else {
-        rejects(new Error("Input Salah"));
-      }
+      if (newArray.length > 0) return resolve(newArray);
+      return reject(new Error("Nilai Tidak Ditemukan !"));
     }, 1000);
   });
 };
 
-//  Try & Catch
+// //  Try & Catch
 async function totalNilai(nilaiAwal, nilaiAkhir, dataArray) {
   try {
-    const sukses = await seleksiNilai(nilaiAwal, nilaiAkhir, dataArray);
-    console.log(sukses);
+    console.log(await seleksiNilai(nilaiAwal, nilaiAkhir, dataArray));
   } catch (error) {
     console.log(error.message);
   }

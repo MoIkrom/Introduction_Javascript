@@ -13,7 +13,7 @@ const getMonth = (callback) => {
 };
 
 const showMonth = (error, month) => {
-  if (error !== null) {
+  if (error) {
     console.log(error.message);
     return;
   }
